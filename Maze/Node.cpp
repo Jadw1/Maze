@@ -5,6 +5,8 @@
 
 #pragma region Constructors & Destructor
 Node::Node() : top(new bool(false)), right(new bool(false)), bottom(new bool(false)), left(new bool(false)) {
+	status = NodeStatus::Default;
+	visited = false;
 }
 
 Node::Node(std::shared_ptr<bool> left) : Node() {
@@ -27,39 +29,49 @@ void Node::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	states.transform *= getTransform();
 
 
-	sf::RectangleShape rect(sf::Vector2f(fullSize, fullSize)); //TODO: Make size as variable
-	rect.setFillColor(sf::Color::White);
+	sf::RectangleShape rect(sf::Vector2f(App::rectSize, App::rectSize)); //TODO: Make size as variable
+	rect.setOrigin(rect.getSize() * 0.5f);
+	rect.setPosition(sf::Vector2f(fullSize, fullSize) * 0.5f);
+	rect.setFillColor(StatusToColor(status));
 	target.draw(rect, states);
 
 
-	sf::ConvexShape border;
+	/*sf::ConvexShape border;
 	border.setPointCount(4);
 	border.setPoint(0, sf::Vector2f(0.0f, 0.0f));
 	border.setPoint(1, sf::Vector2f(fullSize, 0.0f));
 	border.setPoint(2, sf::Vector2f(App::rectSize + App::borderSize, App::borderSize));
-	border.setPoint(3, sf::Vector2f(App::borderSize, App::borderSize));
-	border.setOrigin(sf::Vector2f(fullSize / 2, App::borderSize / 2));
-	border.setFillColor(sf::Color::Black);
+	border.setPoint(3, sf::Vector2f(App::borderSize, App::borderSize));*/
+	sf::RectangleShape border(sf::Vector2f(App::rectSize, App::borderSize));
+	border.setOrigin(border.getSize() * 0.5f);
+	border.setFillColor(StatusToColor(status));
 
-	if (!*top) {
+	if (*top) {
 		border.setRotation(0.0f);
 		border.setPosition(sf::Vector2f(fullSize / 2, App::borderSize / 2));
 		target.draw(border, states);
 	}
-	if (!*right) {
+	if (*right) {
 		border.setRotation(90.0f);
 		border.setPosition(sf::Vector2f(App::borderSize * 1.5f + App::rectSize, fullSize / 2));
 		target.draw(border, states);
 	}
-	if (!*bottom) {
+	if (*bottom) {
 		border.setRotation(180.0f);
 		border.setPosition(sf::Vector2f(fullSize / 2, App::borderSize * 1.5f + App::rectSize));
 		target.draw(border, states);
 	}
-	if (!*left) {
+	if (*left) {
 		border.setRotation(270.0f);
 		border.setPosition(sf::Vector2f(App::borderSize / 2, fullSize / 2));
 		target.draw(border, states);
 	}
 
+}
+
+void Node::SetNodeStatus(NodeStatus status) {
+	this->status = status;
+
+	if (this->status == NodeStatus::Active)
+		visited = true;
 }

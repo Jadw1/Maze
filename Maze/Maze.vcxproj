@@ -138,11 +138,13 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="MazeManager.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="MazeManager.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Node.h" />
   </ItemGroup>

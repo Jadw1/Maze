@@ -1,17 +1,17 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Maze.h"
+#include "MazeManager.h"
 
 class App {
 private:
 	sf::RenderWindow* _window;
-	Maze* _maze;
-	sf::Clock* _clock;
+	std::shared_ptr<Maze> _maze;
+	MazeManager* _manager;
 
-	float deltaTime;
-
-	//static float _rectSize;
-	//static float _borderSize;
+	void HandleEvent(sf::Event e);
+	void HandleInput();
+	void Draw();
 
 public:
 	App();

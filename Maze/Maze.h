@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include "Node.h"
 
 
@@ -16,4 +17,8 @@ public:
 
 	Maze(int xSize, int ySize);
 	~Maze();
+
+	std::vector<int> GetUnvisitedNeighbours(int i);
+	bool OpenWall(int from, int t);
+	sf::Vector2i GetSize();
 };
