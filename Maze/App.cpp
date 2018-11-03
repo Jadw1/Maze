@@ -2,8 +2,8 @@
 #include "MazeManager.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <time.h>
-#include <stdlib.h>
+#include <ctime>
+#include <cstdlib>
 
 #pragma region Constructors & Destructor
 const float App::rectSize = 35.0f;
@@ -12,7 +12,7 @@ const float App::borderSize = 2.0f;
 App::App() {
 	_window = new sf::RenderWindow(sf::VideoMode(800, 800), "Maze");
 
-	std::srand(std::time(NULL));
+	std::srand(std::time(nullptr));
 }
 
 App::App(int x, int y) : App() {

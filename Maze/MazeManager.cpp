@@ -1,7 +1,8 @@
 #include "MazeManager.h"
-#include <stdlib.h>
+#include <cstdlib>
+#include <utility>
 
-MazeManager::MazeManager(std::shared_ptr<Maze> maze) : isFinished(_isFinished), maze(maze) {
+MazeManager::MazeManager(std::shared_ptr<Maze> maze) : isFinished(_isFinished), maze(std::move(maze)) {
 	_isFinished = false;
 	action = Actions::None;
 	recursionStack = nullptr;
@@ -12,6 +13,8 @@ bool MazeManager::SelectAction(Actions action) {
 	if (!_isFinished)
 		return false;
 	this->action = action;
+
+	return true;
 }
 
 void MazeManager::update(const float& dt) {
@@ -33,7 +36,7 @@ void MazeManager::RecursiveBacktracker() {
 
 		activeNode = std::rand() % size.x;
 
-		*maze->nodes[activeNode]->top = false;
+		*maze->nodes[activeNode]->top = true;
 		maze->nodes[activeNode]->SetNodeStatus(NodeStatus::Active);
 
 		actionStatus = ActionStatus::Working;
@@ -58,6 +61,16 @@ void MazeManager::RecursiveBacktracker() {
 			activeNode = recursionStack->top();
 			recursionStack->pop();
 			maze->nodes[activeNode]->SetNodeStatus(NodeStatus::Active);
+		}
+		else
+		{
+			actionStatus = ActionStatus::Done;
+			int exit = std::rand() % size.x;
+			*maze->nodes[exit]->bottom = true;
+			
+
+			delete recursionStack;
+			recursionStack = nullptr;
 		}
 	}
 }

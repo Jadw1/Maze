@@ -10,7 +10,8 @@ enum Actions {
 enum ActionStatus {
 	Idle,
 	FirstStep,
-	Working
+	Working,
+	Done
 };
 
 

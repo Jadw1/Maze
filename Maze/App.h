@@ -10,7 +10,7 @@ private:
 	MazeManager* _manager;
 
 	void HandleEvent(sf::Event e);
-	void HandleInput();
+	static void HandleInput();
 	void Draw();
 
 public:
